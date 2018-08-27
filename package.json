@@ -1,0 +1,14 @@
+{
+  "name": "sunshine-community-social-app",
+  "version": "1.0.0",
+  "description": "A social media app for children with illnesses",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Ian Deans",
+    "email": "ian@deans.us"
+  },
+  "license": "MIT"
+}
