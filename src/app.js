@@ -39,6 +39,7 @@ if ( !isProduction ) {
 }
 
 // Hook in models here
+require( './models' );
 
 // Hook in Routes here
 app.use( require( './routes' ) );
