@@ -6,6 +6,9 @@ const bodyParser = require( 'body-parser' );
 const logger = require( 'morgan' );
 const cors = require( 'cors' );
 const errorHandler = require( 'errorhandler' );
+const mongoose = require( 'mongoose' );
+
+mongoose.promise = global.Promise;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -26,6 +29,13 @@ app.use( session({
 
 if ( !isProduction ) {
     app.use( errorHandler() );
+}
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/sunshine';
+mongoose.connect( dbUrl, { useNewUrlParser: true } );
+console.log( 'Connected to database.' );
+if ( !isProduction ) {
+    mongoose.set( 'debug', true );
 }
 
 // Hook in models here
