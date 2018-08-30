@@ -1,3 +1,4 @@
+require( 'dotenv' ).config();
 const path = require( 'path' );
 const express = require( 'express' );
 const session = require( 'express-session' );
@@ -5,11 +6,14 @@ const bodyParser = require( 'body-parser' );
 const logger = require( 'morgan' );
 const cors = require( 'cors' );
 const errorHandler = require( 'errorhandler' );
+const mongoose = require( 'mongoose' );
+
+mongoose.promise = global.Promise;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
-const PORT = process.env.HTTP_PORT || 5000;
+const PORT = process.env.API_PORT || 5000;
 
 app.use( cors() );
 app.use( logger( 'dev' ) );
@@ -25,6 +29,13 @@ app.use( session({
 
 if ( !isProduction ) {
     app.use( errorHandler() );
+}
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/sunshine';
+mongoose.connect( dbUrl, { useNewUrlParser: true } );
+console.log( 'Connected to database.' );
+if ( !isProduction ) {
+    mongoose.set( 'debug', true );
 }
 
 // Hook in models here
