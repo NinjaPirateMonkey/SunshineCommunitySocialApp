@@ -30,6 +30,7 @@ if ( !isProduction ) {
 // Hook in models here
 
 // Hook in Routes here
+app.use( require( './routes' ) );
 
 // Error Handling
 app.use( ( request, response, next ) => {
