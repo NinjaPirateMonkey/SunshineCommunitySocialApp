@@ -1,3 +1,4 @@
+require( 'dotenv' ).config();
 const path = require( 'path' );
 const express = require( 'express' );
 const session = require( 'express-session' );
@@ -9,7 +10,7 @@ const errorHandler = require( 'errorhandler' );
 const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
-const PORT = process.env.HTTP_PORT || 5000;
+const PORT = process.env.API_PORT || 5000;
 
 app.use( cors() );
 app.use( logger( 'dev' ) );
