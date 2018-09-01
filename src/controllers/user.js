@@ -5,11 +5,17 @@ module.exports = {
     create: async function( request, response, next ) {
         const userData = request.body;
 
-        if ( !userData.name || !userData.facebookId ) {
+        if ( !userData.name ) {
             return response.status(422).json({
                 errors: {
-                    userData: 'is missing some information that is required to create a new user.'
+                    name: 'must be provided.'
                 }
+            })
+        }
+
+        if ( !userData.facebookId ) {
+            return response.status( 422 ).json({
+                facebookID: 'must be provided.'
             })
         }
 
@@ -51,7 +57,24 @@ module.exports = {
             user: updatedUser.toJSON()
         })
     },
-    delete: function( request, response, next ) {
+    delete: async function( request, response, next ) {
+        const { id } = request.query;
+        if ( !id ) {
+            return response.status( 422 ).json({
+                errors: {
+                    userID: 'was not provided as a query parameter.'
+                }
+            })
+        }
 
+        const deletedUser = await User.findOneAndDelete({ id }).exec();
+        if ( !deletedUser ) {
+            return response.json({
+                user: 'with matching ID not found.'
+            })
+        }
+        response.status( 200 ).json({
+            user: `with id ${ id } deleted.`
+        })
     },
 }
