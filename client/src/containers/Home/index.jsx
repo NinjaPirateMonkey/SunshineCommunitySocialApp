@@ -5,7 +5,7 @@ class Home extends React.Component {
     componentDidMount() {
         const { onLoad } = this.props;
 
-        fetch( 'http://localhost:5000/users')
+        fetch( 'http://localhost:5000/users/fake_id')
             .then( res => res.json() )
             .then( data => onLoad( data ))
         // let fakeResData = {
@@ -19,29 +19,30 @@ class Home extends React.Component {
     }
 
     renderProps() {
-        let { articles } = this.props;
-        if ( articles ) {
-            return articles.map(
-                ( article, i ) =>
-                    <div key={ i }>{ article.name }</div>
+        let { users } = this.props;
+        if ( users ) {
+            return users.map(
+                ( user, i ) =>
+                    <div key={ i }>{ user.name }</div>
             );
         }
         return []
     }
 
     render() {
-        const { articles } = this.props;
+        let { user } = this.props;
 
         return (
             <div>
-                { this.renderProps() }
+                { user && Object.values(user).map( field =>
+                    <div> {field} </div>) }
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ( {
-    articles: state.home.articles,
+    user: state.home.user,
 } )
 
 const mapDispatchToProps = dispatch => ( {

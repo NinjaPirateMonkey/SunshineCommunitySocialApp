@@ -4,7 +4,7 @@ export default ( state = {}, action ) => {
             console.log( 'inside reducer' );
             return {
                 ...state,
-                articles: action.data.articles,
+                user: action.data,
             };
         default:
             return state;
