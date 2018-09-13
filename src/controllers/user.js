@@ -26,8 +26,13 @@ module.exports = {
     },
     findAll: async function( request, response, next ) {
         const users = await User.find().exec().catch( next )
-        console.log( 'Users: ', users);
         response.status(200).json(users)
+    },
+    findByFacebookId: async function( request, response, next ) {
+        const { facebookId } = request.params;
+        const user = await User
+            .findOne({ facebookId }).exec().catch(next);
+        return response.json( user.toJSON() );
     },
     update: async function( request, response, next ) {
 
