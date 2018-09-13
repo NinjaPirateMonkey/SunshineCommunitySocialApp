@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import Root from '../Root';
 
 class Home extends React.Component {
     componentDidMount() {
@@ -8,14 +9,6 @@ class Home extends React.Component {
         fetch( 'http://localhost:5000/users/fake_id')
             .then( res => res.json() )
             .then( data => onLoad( data ))
-        // let fakeResData = {
-        //     articles: [
-        //         { name: 'one' },
-        //         { name: 'two' },
-        //         { name: 'three' }
-        //     ]
-        // }
-        // onLoad( fakeResData );
     }
 
     renderProps() {
@@ -33,10 +26,14 @@ class Home extends React.Component {
         let { user } = this.props;
 
         return (
-            <div>
-                { user && Object.values(user).map( field =>
-                    <div> {field} </div>) }
-            </div>
+            <Root>
+                <header>
+                    <h2>Sunshine Community</h2>
+                </header>
+                <main>
+                    { this.children }
+                </main>
+            </Root>
         )
     }
 }
